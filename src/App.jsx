@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getNotesFromApi } from "./features/notes";
+import NotesList from "./components/NotesList";
 
 function App() {
   const dispatch = useDispatch();
@@ -10,7 +11,12 @@ function App() {
     dispatch(getNotesFromApi());
   }
 
-  return <></>;
+  return (
+    <div className="bg-slate-800 min-h-screen flex">
+      {" "}
+      <NotesList />{" "}
+    </div>
+  );
 }
 
 export default App;
