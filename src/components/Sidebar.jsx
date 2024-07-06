@@ -1,6 +1,7 @@
 import React from "react";
 import edit from "../assets/edit.svg";
 import folder from "../assets/folder.svg";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
@@ -10,16 +11,16 @@ const Sidebar = () => {
         <div className="w-4 h-4 rounded-full bg-yellow-500 mx-1"></div>
         <div className="w-4 h-4 rounded-full bg-green-500 mx-1"></div>
       </div>
-      <a href="#">
+      <Link to="/">
         <img
           src={folder}
           alt="Voir toutes les notes"
           className="w-10 h-10 mb-10"
         />
-      </a>
-      <a href="#">
+      </Link>
+      <Link to="/editer">
         <img src={edit} alt="Ecrire une note" className="w-10 h-10 mb-10" />
-      </a>
+      </Link>
     </aside>
   );
 };
