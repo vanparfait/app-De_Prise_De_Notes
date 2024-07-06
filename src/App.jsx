@@ -4,6 +4,7 @@ import NotesList from "./components/NotesList";
 import Sidebar from "./components/Sidebar";
 import SideNotes from "./components/SideNotes";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import DisplayNotes from "./components/DisplayNotes";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ function App() {
         <SideNotes />
         <Routes>
           <Route path="/" element={<NotesList />} />
+          <Route path="/note/:id" element={<DisplayNotes />} />
         </Routes>
       </BrowserRouter>
     </div>
