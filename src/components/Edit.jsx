@@ -60,7 +60,7 @@ const Edit = () => {
           setShowValidation((state) => ({ ...state, [key]: false }));
         }
       }
-      console.log(Object.entries(inputStates));
+      //console.log(Object.entries(inputStates));
     }
   }
 
