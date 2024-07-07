@@ -1,10 +1,13 @@
 import { nanoid } from "nanoid";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addNoteFromUser } from "../features/notes";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addNoteFromUser, editNote } from "../features/notes";
+import { useParams } from "react-router-dom";
 
 const Edit = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
+  const notesValues = useSelector((state) => state.notes);
   const [inputStates, setInputStates] = useState({
     title: "",
     subtitle: "",
@@ -16,6 +19,22 @@ const Edit = () => {
     bodyText: false,
   });
 
+  useEffect(() => {
+    if (id && notesValues) {
+      setInputStates({
+        title: notesValues.list.find((note) => note.id === id).title,
+        subtitle: notesValues.list.find((note) => note.id === id).subtitle,
+        bodyText: notesValues.list.find((note) => note.id === id).bodyText,
+      });
+    } else {
+      setInputStates({
+        title: "",
+        subtitle: "",
+        bodyText: "",
+      });
+    }
+  }, [id]);
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -26,8 +45,13 @@ const Edit = () => {
         subtitle: false,
         bodyText: false,
       });
-      dispatch(addNoteFromUser({ ...inputStates, id: nanoid(8) }));
-      setInputStates({ title: "", subtitle: "", bodyText: "" });
+
+      if (id && notesValues.list) {
+        dispatch(editNote({ ...inputStates, id }));
+      } else {
+        dispatch(addNoteFromUser({ ...inputStates, id: nanoid(8) }));
+        setInputStates({ title: "", subtitle: "", bodyText: "" });
+      }
     } else {
       for (const [key, value] of Object.entries(inputStates)) {
         if (value.length === 0) {
