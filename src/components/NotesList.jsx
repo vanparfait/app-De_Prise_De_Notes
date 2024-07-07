@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const NotesList = () => {
   const notesValues = useSelector((state) => state.notes);
@@ -7,18 +8,23 @@ const NotesList = () => {
   return (
     <div className="p-10 w-full">
       <p className="text-xl text-slate mb-6">Bienvenue sur Notes101</p>
-      <div className="grid lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+      <ul className="grid lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
         {notesValues.list &&
           notesValues.list.map((note) => (
-            <div
-              className="bg-slate-100 hover:bg-slate-50 rounded cursor-pointer"
+            <li
               key={note.id}
+              className="bg-slate-100 hover:bg-slate-50 rounded cursor-pointer"
             >
-              <p className="text-lg font-semibold">{note.title}</p>
-              <p className="text-gray-700">{note.subtitle}</p>
-            </div>
+              <Link
+                to={`/note/${note.id}`}
+                className="block p-4 w-full h-full "
+              >
+                <p className="text-lg font-semibold">{note.title}</p>
+                <p className="text-gray-700">{note.subtitle}</p>
+              </Link>
+            </li>
           ))}
-      </div>
+      </ul>
     </div>
   );
 };
