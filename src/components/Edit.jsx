@@ -1,6 +1,10 @@
+import { nanoid } from "nanoid";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addNoteFromUser } from "../features/notes";
 
 const Edit = () => {
+  const dispatch = useDispatch();
   const [inputStates, setInputStates] = useState({
     title: "",
     subtitle: "",
@@ -11,10 +15,35 @@ const Edit = () => {
     subtitle: false,
     bodyText: false,
   });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (Object.values(inputStates).every((value) => value)) {
+      console.log(Object.values(inputStates).every((value) => value));
+      setShowValidation({
+        title: false,
+        subtitle: false,
+        bodyText: false,
+      });
+      dispatch(addNoteFromUser({ ...inputStates, id: nanoid(8) }));
+      setInputStates({ title: "", subtitle: "", bodyText: "" });
+    } else {
+      for (const [key, value] of Object.entries(inputStates)) {
+        if (value.length === 0) {
+          setShowValidation((state) => ({ ...state, [key]: true }));
+        } else {
+          setShowValidation((state) => ({ ...state, [key]: false }));
+        }
+      }
+      console.log(Object.entries(inputStates));
+    }
+  }
+
   return (
     <div className="w-full p-10">
       <p className="text-slate-100 text-xl mb-4">Ajouter une Note</p>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label className="mb-2 block text-slate-100" htmlFor="titre">
           Le titre
         </label>
